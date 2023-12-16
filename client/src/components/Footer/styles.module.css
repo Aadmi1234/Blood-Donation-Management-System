@@ -1,0 +1,28 @@
+.footer {
+  height: auto;
+  border-radius: 20px;
+  margin: 8px;
+  margin-top: 0;
+  padding-top: 10px;
+  padding-bottom: 2px;
+
+  background: linear-gradient(to right, var(--level-2), var(--level-3));
+  
+  text-align: center;
+}
+
+h4 {
+  color: black;
+  font-weight: 600;
+  
+  text-decoration-line: underline;
+  text-decoration-color: var(--level-1);
+  text-decoration-thickness: 2px;
+}
+
+p {
+  margin-top: 2px;
+  margin-bottom: 0;
+
+  font-weight: 500;
+}
