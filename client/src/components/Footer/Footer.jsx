@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "react-bootstrap/esm/Container";
 
-import styles from "./styles.module.css";
+import styles from "./footer.module.css";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 

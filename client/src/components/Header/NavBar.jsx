@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import "./index.css";
+import styles from "./navbar.module.css";
 import BloodBag from "../../assets/blood-bank.svg";
 import { useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ const NavBar = () => {
   };
 
   const isActive = (item) => {
-    return currentNavItem === item ? "active" : "";
+    return currentNavItem === item ? styles.active : "";
   };
 
   // To set the currentNavItem to the page it is loaded to
@@ -28,12 +28,12 @@ const NavBar = () => {
     } else {
       setCurrentNavItem(currentPath.slice(1));
     }
-  });
+  }, [currentNavItem]);
 
   return (
     <>
       <Navbar
-        className="navbar"
+        className={styles.navbar}
         // fixed="top"
         expand="md"
       >
@@ -43,8 +43,8 @@ const NavBar = () => {
             to="/"
             onClick={() => handleNavItemClick("home")}
           >
-            <img src={BloodBag} alt="" className="blood" />
-            <a className="logo-title">Blood Donation Management System</a>
+            <img src={BloodBag} alt="" className={styles.blood} />
+            <a className={styles.logotitle}>Blood Donation Management System</a>
           </Navbar.Brand>
 
           <Nav>
@@ -53,28 +53,28 @@ const NavBar = () => {
               to="/"
               onClick={() => handleNavItemClick("home")}
             >
-              <a className={`navlink ${isActive("home")}`}>Home</a>
+              <a className={`${styles.navlink} ${isActive("home")}`}>Home</a>
             </Nav.Link>
             <Nav.Link
               as={Link}
               to="/centers"
               onClick={() => handleNavItemClick("centers")}
             >
-              <a className={`navlink ${isActive("centers")}`}>Centers</a>
+              <a className={`${styles.navlink} ${isActive("centers")}`}>Centers</a>
             </Nav.Link>
             <Nav.Link
               as={Link}
               to="/donate"
               onClick={() => handleNavItemClick("donate")}
             >
-              <a className={`navlink ${isActive("donate")}`}>Donate</a>
+              <a className={`${styles.navlink} ${isActive("donate")}`}>Donate</a>
             </Nav.Link>
             <Nav.Link
               as={Link}
               to="/check"
               onClick={() => handleNavItemClick("check")}
             >
-              <a className={`navlink ${isActive("check")}`}>Check</a>
+              <a className={`${styles.navlink} ${isActive("check")}`}>Check</a>
             </Nav.Link>
           </Nav>
         </Container>
