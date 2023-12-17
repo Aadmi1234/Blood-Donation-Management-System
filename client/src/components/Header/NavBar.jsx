@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
-import BloodBag from "../../assets/blood-bank.svg";
+import BloodBag from "/blood-bank.svg";
 import { useEffect, useState } from "react";
 
 // highlight the current page on navbar
