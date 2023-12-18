@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
-import { validateAppId } from "./validateAppId";
+import MySpinner from "../Spinner";
+import { validateAppId } from "../../utils/validations/dataValidations";
 import styles from "./check.module.css";
 
 const Check = () => {
   const [app_id, setAppId] = useState("");
   const [errors, setErrors] = useState(false);
   const [errorLog, setErrorLog] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
   const setField = (value) => {
     setAppId(value);
@@ -24,21 +27,31 @@ const Check = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const [isValid, errorMsg] = validateAppId(app_id);
 
     if (!isValid) {
+      setIsLoading(false); // Spinner should be disabled
       setErrors(true);
       setErrorLog(errorMsg);
     } else {
-      console.log("form submitted");
-      console.log(app_id);
+      // Form is valid
+      // Faking an API call (temporary)
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsFetched(true);
+        console.log("form submitted");
+        console.log(app_id);
+      }, 3000);
     }
   };
 
   return (
-    <div className="form">
-      <h1 className="form-name">Check Appointment Details</h1>
+    <div className="form" style={{ minWidth: "700px", maxWidth: "65%" }}>
+      <div className={styles.titleContainer}>
+        <h1 className={styles.title}>Check Appointment Details</h1>
+      </div>
 
       <Form>
         <InputGroup size="lg">
@@ -55,8 +68,14 @@ const Check = () => {
           </Form.Control.Feedback>
         </InputGroup>
 
-        <button type="submit" onClick={handleSubmit} className={styles.button}>
-          Search
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className={isFetched ? styles.buttonSubmitted : styles.button}
+          disabled={isLoading || isFetched}
+        >
+          {isLoading && <MySpinner />}
+          {isFetched ? "Fetched" : "Check"}
         </button>
       </Form>
     </div>

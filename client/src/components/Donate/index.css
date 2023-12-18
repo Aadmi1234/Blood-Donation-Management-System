@@ -44,7 +44,8 @@
   padding-left: 15px;
 }
 
-.form-submit-button {
+.form-submit-button, 
+.form-submitted-button {
   width: 30%;
   min-width: 300px;
   
@@ -67,4 +68,10 @@
   color: white;
 
   border: 4px solid var(--level-3);
+}
+
+.form-submitted-button {
+  background: green;
+  color: var(--level-4);
+  border: 1px solid black;
 }
