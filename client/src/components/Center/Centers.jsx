@@ -9,28 +9,10 @@ import styles from "./centers.module.css";
 import Failed from "./Failed.jsx";
 import TempImg from "../../assets/tempimg.jpg";
 
-const Centers = () => {
-  const [centersList, setCentersList] = useState([]);
-  const [isError, setIsError] = useState("");
-
-  const getCentersData = async () => {
-    try {
-      const res = await axios.get("/posts");
-
-      setCentersList(res.data);
-      setIsError(""); // when url corrected error shouldn't persists
-
-      // console.log(res);
-    } catch (error) {
-      setIsError(error.message);
-      setCentersList([]); // when url corrupted res shouldn't persist
-
-      // console.log(error);
-    }
-  };
+const Centers = ({ centersData, centersError }) => {
 
   useEffect(() => {
-    getCentersData();
+    window.scrollTo(0,0);
   }, []);
 
   return (
@@ -39,10 +21,10 @@ const Centers = () => {
         <h1 className={styles.title}>List of Centers</h1>
       </div>
 
-      {isError !== "" && <Failed message={isError} />}
+      {centersError !== "" && <Failed message={centersError} />}
 
       <Row xs={1} md={2} lg={3} className="p-2 g-4 mb-4">
-        {centersList.slice(0, 9).map((center) => {
+        {centersData.slice(0, 9).map((center) => {
           return (
             <Col key={center.id}>
               <Card style={{ height: "100%", border: "2px solid black" }}>
