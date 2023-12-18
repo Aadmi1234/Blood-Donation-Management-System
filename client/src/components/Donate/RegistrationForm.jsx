@@ -4,8 +4,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import TimePicker from "react-bootstrap-time-picker";
-import { calcAge, calcDOD, isValidEmail, isValidPhone } from "./validations";
-import { centerList, genderObject, bloodGroupObject } from "./options";
+import MySpinner from "../Spinner";
+import {
+  centerList,
+  genderObject,
+  bloodGroupObject,
+} from "../../variables/options";
+import validateForm from "../../utils/validations/validateForm";
 
 const RegistrationForm = () => {
   const [form, setForm] = useState({
@@ -23,6 +28,9 @@ const RegistrationForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [Tnc, setTnc] = useState(false);
 
@@ -43,77 +51,28 @@ const RegistrationForm = () => {
     // console.log(form);
   };
 
-  const validateForm = () => {
-    const {
-      fname,
-      lname,
-      sex,
-      blood_grp,
-      dob,
-      address,
-      email,
-      phone,
-      centerid,
-      dod,
-      tod,
-    } = form;
-
-    const newErrors = {};
-
-    if (!fname || fname === "")
-      newErrors.fname = "Please enter your first name";
-    if (!lname || lname === "") newErrors.lname = "Please enter your last name";
-
-    if (!dob || dob === "") {
-      newErrors.dob = "Please enter a valid D.O.B";
-      form.dob = ""; // clearing the previous value
-    } else if (calcAge(dob) < 18)
-      newErrors.dob = "Donor needs to be atleast 18 years";
-
-    if (!sex || sex === "") newErrors.sex = "Please select your gender";
-
-    if (!blood_grp || blood_grp === "")
-      newErrors.blood_grp = "Please select your blood group";
-
-    if (!address || address === "")
-      newErrors.address = "Please enter a valid address";
-    else if (address.length < 10)
-      newErrors.address = "Entered address is too short";
-
-    if (isValidEmail(email) === false)
-      newErrors.email = "Please enter a valid email address";
-
-    if (isValidPhone(phone) === false)
-      newErrors.phone = "Please enter a valid phone no.";
-
-    if (!centerid || centerid === "")
-      newErrors.centerid = "Please select a donation center";
-
-    if (!dod || dod === "") newErrors.dod = "Please enter a date for donation";
-    else if (calcDOD(dod) < 0)
-      newErrors.dod = "Enter a valid date for donation";
-
-    if (!tod || tod === 0) newErrors.tod = "Please select an appointment time";
-
-    return newErrors;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    const formErrors = validateForm();
+    const formErrors = validateForm(form);
 
     if (Object.keys(formErrors).length > 0) {
+      setIsLoading(false); // Spinner should be disabled
       setErrors(formErrors);
-    } else {
+    } else if (!Tnc) {
       // Check if T&C accpeted before submit
-      if (!Tnc) {
-        alert("Please accept the Terms and Conditions.");
-        return;
-      }
-
-      console.log("form submitted");
-      console.log(form);
+      alert("Please accept the Terms and Conditions.");
+      setIsLoading(false);
+    } else {
+      // Form is valid
+      // Faking an API call (temporary)
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsSubmitted(true);
+        console.log("form submitted");
+        console.log(form);
+      }, 3000);
     }
   };
 
@@ -356,12 +315,13 @@ const RegistrationForm = () => {
       </Form.Group>
 
       <button
-        variant="primary"
         type="submit"
         onClick={handleSubmit}
-        className="form-submit-button"
+        className={isSubmitted ? "form-submitted-button" : "form-submit-button"}
+        disabled={isLoading || isSubmitted}
       >
-        Register
+        {isLoading && <MySpinner />}
+        {isSubmitted ? "Submitted" : "Register"}
       </button>
     </Form>
   );
