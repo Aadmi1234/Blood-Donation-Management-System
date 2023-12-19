@@ -30,7 +30,7 @@ const App = () => {
     };
 
     fetchCentersFromApi();
-    createCenterList(centersData);
+    // createCenterList(centersData);
   }, []);
 
   return (

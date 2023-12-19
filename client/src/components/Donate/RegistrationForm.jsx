@@ -6,31 +6,30 @@ import InputGroup from "react-bootstrap/InputGroup";
 import TimePicker from "react-bootstrap-time-picker";
 import MySpinner from "../Spinner";
 import { genderObject, bloodGroupObject } from "../../variables/options";
-import { getData } from "../../variables/storeCenterList";
+import postForm from "../../utils/postForm";
 import validateForm from "../../utils/validations/validateForm";
 
 const RegistrationForm = ({ centersData }) => {
   const [form, setForm] = useState({
     fname: "",
     lname: "",
-    sex: "",
-    blood_grp: "",
-    dob: "",
     address: "",
-    email: "",
+    dob: "",
+    blood_grp: "",
+    sex: "",
     phone: "",
+    email: "",
     center_id: "",
-    dod: "",
-    tod: 0,
+    app_date: "",
+    app_time: 0,
   });
-
-  // const centerList = getData();
-  // const centers = Object.keys(centerList);
 
   const [errors, setErrors] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [response, setResponse] = useState({});
 
   const [Tnc, setTnc] = useState(false);
 
@@ -57,6 +56,11 @@ const RegistrationForm = ({ centersData }) => {
 
     const formErrors = validateForm(form);
 
+    const submitData = async () => {
+      let res = await postForm(form);
+      setResponse(res);
+    };
+
     if (Object.keys(formErrors).length > 0) {
       setIsLoading(false); // Spinner should be disabled
       setErrors(formErrors);
@@ -66,17 +70,25 @@ const RegistrationForm = ({ centersData }) => {
       setIsLoading(false);
     } else {
       // Form is valid
-      // Faking an API call (temporary)
-      setTimeout(() => {
+      try {
+        submitData();
         setIsLoading(false);
         setIsSubmitted(true);
         console.log("form submitted");
-        console.log(form);
-      }, 3000);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
     }
   };
 
-  const handleTimeChange = (time) => setField("tod", time);
+  const handleTimeChange = (time) => {
+    let hour = Math.floor(time / 3600);
+    let minute = (time % 3600) / 60;
+    let timeString = `${hour}:${minute ? minute : "00"}`;
+    setField("app_time", timeString);
+  };
 
   return (
     <Form>
@@ -260,16 +272,6 @@ const RegistrationForm = ({ centersData }) => {
             {errors.center_id}
           </Form.Control.Feedback>
         </InputGroup>
-
-        <InputGroup size="lg" as={Col}>
-          <InputGroup.Text>Center Name</InputGroup.Text>
-          <Form.Control
-            type="text"
-            placeholder="Center Name"
-            value={form.center_id === "" ? "" : centerList[form.center_id]}
-            readOnly
-          />
-        </InputGroup>
       </Row>
 
       {/* Date of Donation, Time of Donation */}
@@ -279,12 +281,12 @@ const RegistrationForm = ({ centersData }) => {
           <Form.Control
             type="date"
             placeholder="dd/mm/yyyy"
-            value={form.dod}
-            onChange={(e) => setField("dod", e.target.value)}
-            isInvalid={!!errors.dod}
+            value={form.app_date}
+            onChange={(e) => setField("app_date", e.target.value)}
+            isInvalid={!!errors.app_date}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.dod}
+            {errors.app_date}
           </Form.Control.Feedback>
         </InputGroup>
 
@@ -294,12 +296,12 @@ const RegistrationForm = ({ centersData }) => {
             start="09:00"
             end="17:30"
             step={30}
-            value={form.tod}
+            value={form.app_time}
             onChange={handleTimeChange}
-            isInvalid={!!errors.tod}
+            isInvalid={!!errors.app_time}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.tod}
+            {errors.app_time}
           </Form.Control.Feedback>
         </InputGroup>
       </Row>
