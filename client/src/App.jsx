@@ -19,7 +19,7 @@ const App = () => {
     const fetchCentersFromApi = async () => {
       try {
         const result = await fetchCenters(API); // Assuming fetchData is a function in api.js
-        setCentersData(result.data);
+        setCentersData(result);
         setCentersError(""); // when url corrected error shouldn't persists
       } catch (error) {
         setCentersError(error.message);
@@ -29,6 +29,7 @@ const App = () => {
     };
 
     fetchCentersFromApi();
+    console.log(result);
   }, []);
 
   return (
@@ -38,7 +39,13 @@ const App = () => {
       <div className="main-comp">
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/centers" element={<Centers centersData={centersData} centersError={centersError}/>} />
+          <Route
+            exact
+            path="/centers"
+            element={
+              <Centers centersData={centersData} centersError={centersError} />
+            }
+          />
           <Route exact path="/donate" element={<Donate />} />
           <Route exact path="/check" element={<Check />} />
           <Route path="*" element={<NotFound />} />

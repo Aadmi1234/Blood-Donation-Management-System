@@ -22,7 +22,7 @@ const RegistrationForm = () => {
     address: "",
     email: "",
     phone: "",
-    centerid: "",
+    center_id: "",
     dod: "",
     tod: 0,
   });
@@ -240,9 +240,9 @@ const RegistrationForm = () => {
         <InputGroup size="lg" as={Col}>
           <InputGroup.Text>Center Id</InputGroup.Text>
           <Form.Select
-            value={form.centerid}
-            onChange={(e) => setField("centerid", e.target.value)}
-            isInvalid={!!errors.centerid}
+            value={form.center_id}
+            onChange={(e) => setField("center_id", e.target.value)}
+            isInvalid={!!errors.center_id}
           >
             <option value="" hidden>
               Select Center Id
@@ -254,7 +254,7 @@ const RegistrationForm = () => {
             ))}
           </Form.Select>
           <Form.Control.Feedback type="invalid">
-            {errors.centerid}
+            {errors.center_id}
           </Form.Control.Feedback>
         </InputGroup>
 
@@ -263,7 +263,7 @@ const RegistrationForm = () => {
           <Form.Control
             type="text"
             placeholder="Center Name"
-            value={form.centerid === "" ? "" : form.centerid}
+            value={form.center_id === "" ? "" : form.center_id}
             readOnly
           />
         </InputGroup>

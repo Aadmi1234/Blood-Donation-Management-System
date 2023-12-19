@@ -1,6 +1,6 @@
 const fetchCenters = async (API) => {
   try {
-    const res = await API.get("/posts");
+    const res = await API.get("/getCenters");
     return res;
   } catch (error) {
     throw new Error(error);
