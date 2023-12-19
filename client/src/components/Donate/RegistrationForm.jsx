@@ -25,6 +25,7 @@ const RegistrationForm = () => {
   });
 
   const centerList = getData();
+  const centers = Object.keys(centerList);
 
   const [errors, setErrors] = useState({});
 
@@ -246,11 +247,12 @@ const RegistrationForm = () => {
             <option value="" hidden>
               Select Center Id
             </option>
-            {centerList.map(({ centerId, centerName }) => (
-              <option key={centerId} value={centerId}>
-                {centerId + " : " + centerName}
-              </option>
-            ))}
+
+            {centers.forEach((center) => {
+              <option key={center} value={center}>
+                {center + " : " + centerList[center]}
+              </option>;
+            })}
           </Form.Select>
           <Form.Control.Feedback type="invalid">
             {errors.center_id}
