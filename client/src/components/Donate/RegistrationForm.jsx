@@ -7,6 +7,7 @@ import TimePicker from "react-bootstrap-time-picker";
 import MySpinner from "../Spinner";
 import { genderObject, bloodGroupObject } from "../../variables/options";
 import postForm from "../../utils/postForm";
+import { API } from "../../services/api";
 import validateForm from "../../utils/validations/validateForm";
 
 const RegistrationForm = ({ centersData }) => {
@@ -56,11 +57,6 @@ const RegistrationForm = ({ centersData }) => {
 
     const formErrors = validateForm(form);
 
-    const submitData = async () => {
-      let res = await postForm(form);
-      setResponse(res);
-    };
-
     if (Object.keys(formErrors).length > 0) {
       setIsLoading(false); // Spinner should be disabled
       setErrors(formErrors);
@@ -70,16 +66,17 @@ const RegistrationForm = ({ centersData }) => {
       setIsLoading(false);
     } else {
       // Form is valid
-      try {
-        submitData();
-        setIsLoading(false);
-        setIsSubmitted(true);
-        console.log("form submitted");
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
-      }
+      API.post("/submitForm", form)
+        .then((response) => {
+          setIsLoading(false);
+          setIsSubmitted(true);
+          console.log("form submitted");
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
     }
   };
 
