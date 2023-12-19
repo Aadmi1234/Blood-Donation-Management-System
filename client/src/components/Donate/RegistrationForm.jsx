@@ -5,11 +5,8 @@ import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import TimePicker from "react-bootstrap-time-picker";
 import MySpinner from "../Spinner";
-import {
-  centerList,
-  genderObject,
-  bloodGroupObject,
-} from "../../variables/options";
+import { genderObject, bloodGroupObject } from "../../variables/options";
+import { getData } from "../../variables/storeCenterList";
 import validateForm from "../../utils/validations/validateForm";
 
 const RegistrationForm = () => {
@@ -26,6 +23,8 @@ const RegistrationForm = () => {
     dod: "",
     tod: 0,
   });
+
+  const centerList = getData();
 
   const [errors, setErrors] = useState({});
 
@@ -247,9 +246,9 @@ const RegistrationForm = () => {
             <option value="" hidden>
               Select Center Id
             </option>
-            {centerList.map((centerId, index) => (
-              <option key={index} value={centerId}>
-                {centerId}
+            {centerList.map(({ centerId, centerName }) => (
+              <option key={centerId} value={centerId}>
+                {centerId + " : " + centerName}
               </option>
             ))}
           </Form.Select>
@@ -263,7 +262,7 @@ const RegistrationForm = () => {
           <Form.Control
             type="text"
             placeholder="Center Name"
-            value={form.center_id === "" ? "" : form.center_id}
+            value={form.center_id === "" ? "" : centerList[form.center_id]}
             readOnly
           />
         </InputGroup>

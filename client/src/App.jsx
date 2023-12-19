@@ -8,6 +8,7 @@ import Centers from "./components/Center/Centers";
 import Check from "./components/Check/Check";
 import NotFound from "./components/NotFound/NotFound";
 import fetchCenters from "./utils/fetchCenters";
+import createCenterList from "./utils/createCenterList";
 import { API } from "./services/api";
 import "./App.css";
 
@@ -20,8 +21,9 @@ const App = () => {
       try {
         const result = await fetchCenters(API); // Assuming fetchData is a function in api.js
         setCentersData(result.data);
-        console.log(centersData);
         setCentersError(""); // when url corrected error shouldn't persists
+
+        createCenterList(centersData);
       } catch (error) {
         setCentersError(error.message);
         setCentersData([]); // when url corrupted res shouldn't persist
