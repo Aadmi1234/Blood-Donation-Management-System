@@ -22,8 +22,6 @@ const App = () => {
         const result = await fetchCenters(API); // Assuming fetchData is a function in api.js
         setCentersData(result.data);
         setCentersError(""); // when url corrected error shouldn't persists
-
-        createCenterList(centersData);
       } catch (error) {
         setCentersError(error.message);
         setCentersData([]); // when url corrupted res shouldn't persist
@@ -32,6 +30,7 @@ const App = () => {
     };
 
     fetchCentersFromApi();
+    createCenterList(centersData);
   }, []);
 
   return (
@@ -48,7 +47,11 @@ const App = () => {
               <Centers centersData={centersData} centersError={centersError} />
             }
           />
-          <Route exact path="/donate" element={<Donate />} />
+          <Route
+            exact
+            path="/donate"
+            element={<Donate centersData={centersData} />}
+          />
           <Route exact path="/check" element={<Check />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

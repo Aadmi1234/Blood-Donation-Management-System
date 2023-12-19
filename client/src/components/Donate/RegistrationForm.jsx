@@ -9,7 +9,7 @@ import { genderObject, bloodGroupObject } from "../../variables/options";
 import { getData } from "../../variables/storeCenterList";
 import validateForm from "../../utils/validations/validateForm";
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ centersData }) => {
   const [form, setForm] = useState({
     fname: "",
     lname: "",
@@ -24,8 +24,8 @@ const RegistrationForm = () => {
     tod: 0,
   });
 
-  const centerList = getData();
-  const centers = Object.keys(centerList);
+  // const centerList = getData();
+  // const centers = Object.keys(centerList);
 
   const [errors, setErrors] = useState({});
 
@@ -248,10 +248,12 @@ const RegistrationForm = () => {
               Select Center Id
             </option>
 
-            {centers.forEach((center) => {
-              <option key={center} value={center}>
-                {center + " : " + centerList[center]}
-              </option>;
+            {centersData.map((center) => {
+              return (
+                <option key={center.center_id} value={center.center_id}>
+                  {center.center_id + " : " + center.center_name}
+                </option>
+              );
             })}
           </Form.Select>
           <Form.Control.Feedback type="invalid">
