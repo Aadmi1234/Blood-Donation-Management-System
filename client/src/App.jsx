@@ -19,7 +19,8 @@ const App = () => {
     const fetchCentersFromApi = async () => {
       try {
         const result = await fetchCenters(API); // Assuming fetchData is a function in api.js
-        setCentersData(result);
+        setCentersData(result.data);
+        console.log(centersData);
         setCentersError(""); // when url corrected error shouldn't persists
       } catch (error) {
         setCentersError(error.message);
@@ -29,7 +30,6 @@ const App = () => {
     };
 
     fetchCentersFromApi();
-    console.log(result);
   }, []);
 
   return (
