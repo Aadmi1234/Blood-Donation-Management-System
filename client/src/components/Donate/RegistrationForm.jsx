@@ -30,8 +30,6 @@ const RegistrationForm = ({ centersData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [response, setResponse] = useState({});
-
   const [Tnc, setTnc] = useState(false);
 
   const setField = (field, value) => {
@@ -66,6 +64,7 @@ const RegistrationForm = ({ centersData }) => {
       setIsLoading(false);
     } else {
       // Form is valid
+      console.log(form);
       API.post("/submitForm", form)
         .then((response) => {
           setIsLoading(false);
