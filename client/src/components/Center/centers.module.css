@@ -1,0 +1,41 @@
+.container {
+  min-width: 700px;
+  max-width: 80%;
+  background-color: var(--level-4);
+  margin: 0px;
+  border-radius: 30px;
+  padding: 20px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title {
+  flex: 1;
+  min-width: auto;
+  max-width: 600px;
+
+  background: linear-gradient(to right, var(--level-1), var(--level-2), var(--level-3));
+  border: 2px solid black;
+  border-radius: 10px;
+  color: black;
+
+  margin-top: 10px;
+  margin-bottom: 25px;
+  padding: 2px;
+}
+
+.cardBody {
+  background: linear-gradient(to bottom, var(--level-3), var(--level-2));
+}
+
+h4{
+  text-decoration: none;
+}
+
+p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
