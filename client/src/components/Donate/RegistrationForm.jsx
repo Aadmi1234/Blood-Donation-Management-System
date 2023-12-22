@@ -5,26 +5,24 @@ import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import TimePicker from "react-bootstrap-time-picker";
 import MySpinner from "../Spinner";
-import {
-  centerList,
-  genderObject,
-  bloodGroupObject,
-} from "../../variables/options";
+import { genderObject, bloodGroupObject } from "../../variables/options";
+import postForm from "../../utils/postForm";
+import { API } from "../../services/api";
 import validateForm from "../../utils/validations/validateForm";
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ centersData }) => {
   const [form, setForm] = useState({
     fname: "",
     lname: "",
-    sex: "",
-    blood_grp: "",
-    dob: "",
     address: "",
-    email: "",
+    dob: "",
+    blood_grp: "",
+    sex: "",
     phone: "",
-    centerid: "",
-    dod: "",
-    tod: 0,
+    email: "",
+    center_id: "",
+    app_date: "",
+    app_time: 0,
   });
 
   const [errors, setErrors] = useState({});
@@ -66,17 +64,27 @@ const RegistrationForm = () => {
       setIsLoading(false);
     } else {
       // Form is valid
-      // Faking an API call (temporary)
-      setTimeout(() => {
-        setIsLoading(false);
-        setIsSubmitted(true);
-        console.log("form submitted");
-        console.log(form);
-      }, 3000);
+      console.log(form);
+      API.post("/submitForm", form)
+        .then((response) => {
+          setIsLoading(false);
+          setIsSubmitted(true);
+          console.log("form submitted");
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
     }
   };
 
-  const handleTimeChange = (time) => setField("tod", time);
+  const handleTimeChange = (time) => {
+    let hour = Math.floor(time / 3600);
+    let minute = (time % 3600) / 60;
+    let timeString = `${hour}:${minute ? minute : "00"}`;
+    setField("app_time", timeString);
+  };
 
   return (
     <Form>
@@ -240,32 +248,25 @@ const RegistrationForm = () => {
         <InputGroup size="lg" as={Col}>
           <InputGroup.Text>Center Id</InputGroup.Text>
           <Form.Select
-            value={form.centerid}
-            onChange={(e) => setField("centerid", e.target.value)}
-            isInvalid={!!errors.centerid}
+            value={form.center_id}
+            onChange={(e) => setField("center_id", e.target.value)}
+            isInvalid={!!errors.center_id}
           >
             <option value="" hidden>
               Select Center Id
             </option>
-            {centerList.map((centerId, index) => (
-              <option key={index} value={centerId}>
-                {centerId}
-              </option>
-            ))}
+
+            {centersData.map((center) => {
+              return (
+                <option key={center.center_id} value={center.center_id}>
+                  {center.center_id + " : " + center.center_name}
+                </option>
+              );
+            })}
           </Form.Select>
           <Form.Control.Feedback type="invalid">
-            {errors.centerid}
+            {errors.center_id}
           </Form.Control.Feedback>
-        </InputGroup>
-
-        <InputGroup size="lg" as={Col}>
-          <InputGroup.Text>Center Name</InputGroup.Text>
-          <Form.Control
-            type="text"
-            placeholder="Center Name"
-            value={form.centerid === "" ? "" : form.centerid}
-            readOnly
-          />
         </InputGroup>
       </Row>
 
@@ -276,12 +277,12 @@ const RegistrationForm = () => {
           <Form.Control
             type="date"
             placeholder="dd/mm/yyyy"
-            value={form.dod}
-            onChange={(e) => setField("dod", e.target.value)}
-            isInvalid={!!errors.dod}
+            value={form.app_date}
+            onChange={(e) => setField("app_date", e.target.value)}
+            isInvalid={!!errors.app_date}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.dod}
+            {errors.app_date}
           </Form.Control.Feedback>
         </InputGroup>
 
@@ -291,12 +292,12 @@ const RegistrationForm = () => {
             start="09:00"
             end="17:30"
             step={30}
-            value={form.tod}
+            value={form.app_time}
             onChange={handleTimeChange}
-            isInvalid={!!errors.tod}
+            isInvalid={!!errors.app_time}
           />
           <Form.Control.Feedback type="invalid">
-            {errors.tod}
+            {errors.app_time}
           </Form.Control.Feedback>
         </InputGroup>
       </Row>

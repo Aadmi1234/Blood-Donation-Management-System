@@ -15,9 +15,9 @@ const validateForm = (form) => {
     address,
     email,
     phone,
-    centerid,
-    dod,
-    tod,
+    center_id,
+    app_date,
+    app_time,
   } = form;
 
   const newErrors = {};
@@ -47,13 +47,16 @@ const validateForm = (form) => {
   if (isValidPhone(phone) === false)
     newErrors.phone = "Please enter a valid phone no.";
 
-  if (!centerid || centerid === "")
-    newErrors.centerid = "Please select a donation center";
+  if (!center_id || center_id === "")
+    newErrors.center_id = "Please select a donation center";
 
-  if (!dod || dod === "") newErrors.dod = "Please enter a date for donation";
-  else if (calcDOD(dod) < 0) newErrors.dod = "Enter a valid date for donation";
+  if (!app_date || app_date === "")
+    newErrors.app_date = "Please enter a date for donation";
+  else if (calcDOD(app_date) < 0)
+    newErrors.app_date = "Enter a valid date for donation";
 
-  if (!tod || tod === 0) newErrors.tod = "Please select an appointment time";
+  if (!app_time || app_time === 0)
+    newErrors.app_time = "Please select an appointment time";
 
   return newErrors;
 };

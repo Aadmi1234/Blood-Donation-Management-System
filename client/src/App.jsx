@@ -8,6 +8,7 @@ import Centers from "./components/Center/Centers";
 import Check from "./components/Check/Check";
 import NotFound from "./components/NotFound/NotFound";
 import fetchCenters from "./utils/fetchCenters";
+import createCenterList from "./utils/createCenterList";
 import { API } from "./services/api";
 import "./App.css";
 
@@ -29,6 +30,7 @@ const App = () => {
     };
 
     fetchCentersFromApi();
+    // createCenterList(centersData);
   }, []);
 
   return (
@@ -38,8 +40,18 @@ const App = () => {
       <div className="main-comp">
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/centers" element={<Centers centersData={centersData} centersError={centersError}/>} />
-          <Route exact path="/donate" element={<Donate />} />
+          <Route
+            exact
+            path="/centers"
+            element={
+              <Centers centersData={centersData} centersError={centersError} />
+            }
+          />
+          <Route
+            exact
+            path="/donate"
+            element={<Donate centersData={centersData} />}
+          />
           <Route exact path="/check" element={<Check />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
