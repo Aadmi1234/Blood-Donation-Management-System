@@ -1,7 +1,7 @@
 create database blood_donation_management_system;
 use blood_donation_management_system;
 
-create table USERS (
+create table users (
     user_id int primary key auto_increment,
     fname varchar(15),
     lname varchar(15),
@@ -13,7 +13,7 @@ create table USERS (
     email varchar(30)
 );
 
-create table CENTERS(
+create table centers(
     center_id int primary key auto_increment,
     center_name varchar(30),
     city varchar(30),
@@ -21,7 +21,7 @@ create table CENTERS(
     address varchar(100)
 );
 
-create table APPOINTMENTS (
+create table appointments (
     app_id int primary key auto_increment,
     center_id int,
     user_id int,
