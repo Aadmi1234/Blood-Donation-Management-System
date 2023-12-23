@@ -32,16 +32,16 @@ export const isValidPhone = (phone) => {
   return validity;
 };
 
-export const validateAppId = (app_id) => {
+export const validateAppId = ({ app_id }) => {
   let validity = true;
   let errorMsg = "";
 
   if (!app_id || app_id === "") {
     validity = false;
     errorMsg = "Please enter your application id.";
-  } else if (app_id.length !== 10) {
+  } else if (isNaN(app_id)) {
     validity = false;
-    errorMsg = "Please enter a valid 10-dig application id.";
+    errorMsg = "Please enter a valid application id.";
   }
 
   return [validity, errorMsg];

@@ -1,4 +1,6 @@
-const fetchCenters = async (API) => {
+import { API } from "../services/api";
+
+const fetchCenters = async () => {
   try {
     const res = await API.get("/getCenters");
     return res;
