@@ -2,14 +2,15 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+
 import styles from "./navbar.module.css";
 import BloodBag from "/blood-bank.svg";
 import { useEffect, useState } from "react";
 
-// highlight the current page on navbar
-
 const NavBar = () => {
   const [currentNavItem, setCurrentNavItem] = useState("home");
+
+  const [title, setTitle] = useState("");
 
   const handleNavItemClick = (item) => {
     setCurrentNavItem(item);
@@ -30,12 +31,36 @@ const NavBar = () => {
     }
   }, [currentNavItem]);
 
+  // To handle resizing of window for responsive navbar
+  useEffect(() => {
+    const handleResize = () => {
+      // Check the window width and update the state
+      if (window.innerWidth < 1000) {
+        setTitle("रक्त दान");
+      } else {
+        setTitle("Blood Donation Management System");
+      }
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Initial check for window width on mount
+    handleResize();
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <Navbar
         className={styles.navbar}
         // fixed="top"
-        expand="md"
+        collapseOnSelect
+        expand="sm"
       >
         <Container className="justify-content-between cnt">
           <Navbar.Brand
@@ -44,10 +69,10 @@ const NavBar = () => {
             onClick={() => handleNavItemClick("home")}
           >
             <img src={BloodBag} alt="" className={styles.blood} />
-            <a className={styles.logotitle}>Blood Donation Management System</a>
+            <a className={styles.logotitle}>{title}</a>
           </Navbar.Brand>
-
-          <Nav>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Nav className="mr-auto">
             <Nav.Link
               as={Link}
               to="/"
@@ -60,14 +85,18 @@ const NavBar = () => {
               to="/centers"
               onClick={() => handleNavItemClick("centers")}
             >
-              <a className={`${styles.navlink} ${isActive("centers")}`}>Centers</a>
+              <a className={`${styles.navlink} ${isActive("centers")}`}>
+                Centers
+              </a>
             </Nav.Link>
             <Nav.Link
               as={Link}
               to="/donate"
               onClick={() => handleNavItemClick("donate")}
             >
-              <a className={`${styles.navlink} ${isActive("donate")}`}>Donate</a>
+              <a className={`${styles.navlink} ${isActive("donate")}`}>
+                Donate
+              </a>
             </Nav.Link>
             <Nav.Link
               as={Link}
