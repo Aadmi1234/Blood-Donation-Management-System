@@ -4,10 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import TimePicker from "react-bootstrap-time-picker";
+
 import MySpinner from "../Spinner";
 import { genderObject, bloodGroupObject } from "../../variables/options";
-import postForm from "../../utils/postForm";
-import { API } from "../../services/api";
+import { postForm } from "../../utils/postData";
 import validateForm from "../../utils/validations/validateForm";
 
 const RegistrationForm = ({ centersData }) => {
@@ -26,6 +26,8 @@ const RegistrationForm = ({ centersData }) => {
   });
 
   const [errors, setErrors] = useState({});
+
+  const [response, setResponse] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -53,6 +55,20 @@ const RegistrationForm = ({ centersData }) => {
     e.preventDefault();
     setIsLoading(true);
 
+    const submitRequest = async () => {
+      try {
+        const res = await postForm(form);
+        setIsLoading(false);
+        setIsSubmitted(true);
+        setResponse(res);
+        console.log("form submitted");
+        console.log(res);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+      }
+    };
+
     const formErrors = validateForm(form);
 
     if (Object.keys(formErrors).length > 0) {
@@ -65,17 +81,7 @@ const RegistrationForm = ({ centersData }) => {
     } else {
       // Form is valid
       console.log(form);
-      API.post("/submitForm", form)
-        .then((response) => {
-          setIsLoading(false);
-          setIsSubmitted(true);
-          console.log("form submitted");
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-          setIsLoading(false);
-        });
+      submitRequest();
     }
   };
 
@@ -324,6 +330,10 @@ const RegistrationForm = ({ centersData }) => {
         {isLoading && <MySpinner />}
         {isSubmitted ? "Submitted" : "Register"}
       </button>
+
+      <pre className="fs-3 fw-bold mt-4 mb-0">
+        {isSubmitted ? `Your application id is : ${response.data.app_id}` : ""}
+      </pre>
     </Form>
   );
 };

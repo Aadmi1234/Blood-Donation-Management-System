@@ -8,8 +8,6 @@ import Centers from "./components/Center/Centers";
 import Check from "./components/Check/Check";
 import NotFound from "./components/NotFound/NotFound";
 import fetchCenters from "./utils/fetchCenters";
-import createCenterList from "./utils/createCenterList";
-import { API } from "./services/api";
 import "./App.css";
 
 const App = () => {
@@ -19,7 +17,7 @@ const App = () => {
   useEffect(() => {
     const fetchCentersFromApi = async () => {
       try {
-        const result = await fetchCenters(API); // Assuming fetchData is a function in api.js
+        const result = await fetchCenters(); // Assuming fetchData is a function in api.js
         setCentersData(result.data);
         setCentersError(""); // when url corrected error shouldn't persists
       } catch (error) {
@@ -30,7 +28,9 @@ const App = () => {
     };
 
     fetchCentersFromApi();
+    
     // createCenterList(centersData);
+    // check why the above function is not working
   }, []);
 
   return (

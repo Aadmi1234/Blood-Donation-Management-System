@@ -3,24 +3,78 @@
   border-radius: 20px;
   margin: 8px;
   margin-top: 0;
-  padding-top: 10px;
-  padding-bottom: 2px;
-
-  background: linear-gradient(to right, var(--level-2), var(--level-3));
-  
+  padding: 2rem 0;
+  background: linear-gradient(to right, var(--level-2), var(--level-3), var(--level-2));
   text-align: center;
 }
 
-h4 {
-  color: black;
+.h3 {
   font-weight: 600;
-  
-  text-decoration-line: underline;
-  text-decoration-color: var(--level-1);
-  text-decoration-thickness: 2px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-decoration: underline 2px #f60838;
+}
+.webname {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  word-spacing: 2px;
 }
 
-p {
+.verticalLine {
+  margin-left: 2rem;
+  border-left: 1px solid #f60838;
+  height: 100%;
+  width: 30px;
+}
+
+.ft1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 300px;
+  max-width: 400px;
+}
+.logo {
+  height: 120px;
+  width: 120px;
+  margin-bottom: 1rem;
+  animation: beat 2s infinite ease;
+}
+@keyframes beat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.ft2 {
+  text-align: start;
+  padding-left: 10%;
+}
+
+.ulist {
+  margin-left: 1rem;
+}
+.ulistli {
+  padding: 0.8rem 0.8rem;
+  font-weight: 600;
+  font-size: 22px;
+}
+.ulistli:hover {
+  color: #f60838;
+  font-weight: 700;
+}
+
+
+
+.copyright {
   margin-top: 2px;
   margin-bottom: 0;
 

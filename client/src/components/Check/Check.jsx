@@ -4,17 +4,24 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 import MySpinner from "../Spinner";
 import { validateAppId } from "../../utils/validations/dataValidations";
+import { postAppId } from "../../utils/postData";
 import styles from "./check.module.css";
 
 const Check = () => {
-  const [app_id, setAppId] = useState("");
+  const [app_id, setAppId] = useState({ app_id: "" });
   const [errors, setErrors] = useState(false);
   const [errorLog, setErrorLog] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
+  const [response, setResponse] = useState({});
 
   const setField = (value) => {
-    setAppId(value);
+    // new entry being inserted
+    setIsFetched(false);
+
+    setAppId({
+      app_id: value,
+    });
 
     if (!!errors) {
       // There was an error but change encountered
@@ -31,19 +38,27 @@ const Check = () => {
 
     const [isValid, errorMsg] = validateAppId(app_id);
 
+    const submitRequest = async () => {
+      try {
+        const res = await postAppId(app_id);
+        setIsLoading(false);
+        setIsFetched(true);
+        setResponse(res);
+        console.log("application details fetched");
+        console.log(res);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+      }
+    };
+
     if (!isValid) {
       setIsLoading(false); // Spinner should be disabled
       setErrors(true);
       setErrorLog(errorMsg);
     } else {
-      // Form is valid
-      // Faking an API call (temporary)
-      setTimeout(() => {
-        setIsLoading(false);
-        setIsFetched(true);
-        console.log("form submitted");
-        console.log(app_id);
-      }, 3000);
+      console.log(app_id);
+      submitRequest();
     }
   };
 
@@ -58,8 +73,8 @@ const Check = () => {
           <InputGroup.Text>Appointment Id</InputGroup.Text>
           <Form.Control
             type="plaintext"
-            placeholder="Enter 10-dig appointment id"
-            value={app_id}
+            placeholder="Enter your appointment id"
+            value={app_id.app_id}
             onChange={(e) => setField(e.target.value)}
             isInvalid={errors}
           />
@@ -77,6 +92,9 @@ const Check = () => {
           {isLoading && <MySpinner />}
           {isFetched ? "Fetched" : "Check"}
         </button>
+        <pre className="fs-4 fw-bold">
+          {isFetched && Object.keys(response.data).length > 0 ? JSON.stringify(response.data, undefined, 2) : ""}
+        </pre>
       </Form>
     </div>
   );
