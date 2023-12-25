@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ErrorImg from "/404.svg";
+import ErrorImg from "/not-found.jpg";
 
 const Failed = ({message}) => {
   const imgStyles = {
