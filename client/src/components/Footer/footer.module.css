@@ -68,7 +68,7 @@
   font-size: 22px;
 }
 .ulistli:hover {
-  color: #f60838;
+  color: var(--level-1);
   font-weight: 700;
 }
 
