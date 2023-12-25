@@ -17,6 +17,12 @@ app.use(express.json());
 //   );
 // });
 
+app.get("/", (req,res)=>{
+  res.json({
+    message: "Docker is sexy!!🔥"
+  })
+});
+
 app.get("/getCenters", async (req, res) => {
   const centers = await getCenters();
   res.send(centers);
