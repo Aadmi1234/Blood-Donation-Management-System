@@ -64,7 +64,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i class="fa-solid fa-github" /> &nbsp; Laya Arun
+                  <i class="fa-brands fa-github" /> &nbsp; Laya Arun
                 </a>
               </li>
               <li className={styles.ulistli}>
@@ -74,7 +74,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i class="fa-brands fa-linkedin" /> &nbsp;Laya Arun
+                  <i class="fa-brands fa-linkedin" /> &nbsp; Laya Arun
                 </a>
               </li>
               <li className={styles.ulistli}>
@@ -84,7 +84,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i class="fa-solid fa-github" /> &nbsp; Pranay Sharma
+                  <i class="fa-brands fa-github" /> &nbsp; Pranay Sharma
                 </a>
               </li>
               <li className={styles.ulistli}>
@@ -94,7 +94,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i class="fa-brands fa-linkedin" /> &nbsp;Pranay Sharma
+                  <i class="fa-brands fa-linkedin" /> &nbsp; Pranay Sharma
                 </a>
               </li>
             </ul>
