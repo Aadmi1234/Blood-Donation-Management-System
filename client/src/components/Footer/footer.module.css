@@ -1,17 +1,20 @@
 .footer {
   height: auto;
+  /* border-radius: 20px; */
+  /* margin: 8px; */
   border-radius: 20px;
-  margin: 8px;
   margin-top: 0;
   padding: 2rem 0;
-  background: linear-gradient(to right, var(--level-2), var(--level-3), var(--level-2));
+  /* background: linear-gradient(to right, var(--level-2), var(--level-3), var(--level-2)); */
+  background-color: var(--level-3);
   text-align: center;
 }
 
 .h3 {
   font-weight: 600;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  text-decoration: underline 2px #f60838;
+  color: black;
+  text-decoration: underline 2px rgb(94, 87, 87);
 }
 .webname {
   font-size: 30px;
@@ -22,7 +25,7 @@
 
 .verticalLine {
   margin-left: 2rem;
-  border-left: 1px solid #f60838;
+  border-left: 1px solid black;
   height: 100%;
   width: 30px;
 }

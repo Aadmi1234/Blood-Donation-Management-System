@@ -9,6 +9,7 @@ import MySpinner from "../Spinner";
 import { genderObject, bloodGroupObject } from "../../variables/options";
 import { postForm } from "../../utils/postData";
 import validateForm from "../../utils/validations/validateForm";
+import "./donate.css"
 
 const RegistrationForm = ({ centersData }) => {
   const [form, setForm] = useState({

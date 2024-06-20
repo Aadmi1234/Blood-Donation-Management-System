@@ -8,6 +8,8 @@ import Centers from "./components/Center/Centers";
 import Check from "./components/Check/Check";
 import NotFound from "./components/NotFound/NotFound";
 import fetchCenters from "./utils/fetchCenters";
+
+
 import "./App.css";
 
 const App = () => {

@@ -1,0 +1,27 @@
+.heroTitle {
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: 3px 3px 8px rgba(218, 15, 15, 0.664);
+}
+
+.heroText {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.bloodDonationStat {
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.homeImage {
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    scale: 0.95;
+    background-color: #f8f9fa;
+    border: 1px solid #000;
+    border-radius: 5px;
+}

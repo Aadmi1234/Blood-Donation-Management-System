@@ -1,6 +1,6 @@
 import React from "react";
 import RegistrationForm from "./RegistrationForm";
-import "./index.css";
+import "./donate.css";
 
 const Donate = ({ centersData }) => {
   return (
